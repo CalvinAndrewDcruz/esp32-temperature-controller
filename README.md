@@ -1,57 +1,64 @@
-# ESP32 Temperature Control System
+# ESP32 Touchscreen Temperature Control System
 
 ## Overview
-This project implements a touchscreen-based temperature control system using ESP32.  
-It monitors environmental conditions and controls a valve system based on temperature and dew point logic.
+This project implements a smart temperature control system using ESP32 with a touchscreen interface.  
+It monitors environmental conditions and controls a relay (valve system) based on temperature and dew point logic.
 
 ## Features
-- Real-time temperature and humidity monitoring
-- Touchscreen GUI interface
-- Automatic valve control logic
-- Sensor integration (DHT22, PT100)
-- Communication with external devices (ESP32 nodes)
-
-## Hardware Used
-- ESP32
-- TFT Display (SPI / Parallel)
-- XPT2046 Touch Controller
-- DHT22 Sensor
-- PT100 (via MAX31865)
-- Relay / Valve control system
-
-## Software & Tools
-- Arduino IDE (ESP32)
-- Embedded C/C++
-- TFT_eSPI / LVGL (GUI)
-- SPI Communication
+- Real-time temperature and humidity monitoring (DHT22)
+- Floor temperature sensing using PT100 (MAX31865)
+- Touchscreen GUI with multiple screens
+- Adjustable control parameters using sliders
+- Automatic relay control based on environmental conditions
 
 ## System Design
-The system reads:
-- Room Temperature
-- Humidity
-- Dew Point
-- Floor Temperature
 
-Based on these values, control logic determines whether the valve should be ON or OFF:
-- If set temperature achieved → Valve OFF  
-- If floor temp ≤ dew point + offset → Valve OFF  
-- Otherwise → Valve ON  
+### Sensors:
+- Room Temperature & Humidity → DHT22  
+- Floor Temperature → PT100 via MAX31865  
 
-## How It Works
-1. Sensors collect environmental data  
-2. ESP32 processes values  
-3. GUI displays readings on touchscreen  
-4. Control logic decides valve operation  
-5. Output signal sent to relay/ESP32 node  
+### Control Logic:
+- If floor temperature < (dew point + offset) → Relay OFF  
+- If room temperature > cut-in temperature → Relay ON  
+- If room temperature < cut-out temperature → Relay OFF  
+
+### User Interface:
+- Main Screen:
+  - Displays Room Temp, Humidity, Dew Point, Floor Temp
+- Settings Screen:
+  - Adjust Cut-In Temp
+  - Adjust Cut-Out Temp
+  - Adjust Dew Offset
+
+## Tools & Technologies
+- ESP32 (Arduino Framework)
+- TFT_eSPI (Display)
+- XPT2046 (Touch Controller)
+- Adafruit MAX31865 Library
+- Embedded C++
+
+## How to Run
+1. Open code in Arduino IDE  
+2. Install required libraries:
+   - TFT_eSPI
+   - XPT2046_Touchscreen
+   - DHT
+   - Adafruit MAX31865  
+3. Upload to ESP32  
+4. Interact using touchscreen  
 
 ## Results
-(Add screenshots of your GUI + system running)
+
+### Main Screen
+![Main Screen](images/main_screen.png)
+
+### Settings Screen
+![Settings](images/settings_screen.png)
 
 ## Folder Structure
 src/ - main ESP32 code  
-lib/ - libraries (if any)  
-docs/ - design explanation  
 images/ - screenshots  
+docs/ - design notes  
 
 ## Author
 Calvin D'Cruz
